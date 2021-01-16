@@ -1,3 +1,76 @@
+@mixin size {
+  display: relative;
+  margin: 0 1px 1px;
+  width: 100px;
+  height: 100px;
+  background-color: #eee;
+  border: 1px solid;
+  box-sizing: border-box;
+
+  &::after {
+    display: inline-block;
+  }
+}
+
 body {
   margin: 0;
+}
+
+.calendar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  width: 730px;
+}
+
+@for $i from 1 through 31 {
+  .calendar div:nth-child(#{$i})::after {
+    content: "#{$i}";
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    display: none;
+    width: 100%;
+    line-height: 100px;
+    text-align: center;
+  }
+}
+
+@for $i from 1 through 31 {
+  .calendar-#{$i} div:nth-child(-n+#{$i}) {
+    @include size;
+  }
+  
+}
+
+$days : (
+  "calendar-mon": 0,
+  "calendar-tue": 103px,
+  "calendar-wed": 205px,
+  "calendar-thu": 307px,
+  "calendar-fri": 409px,
+  "calendar-sat": 511px,
+  "calendar-sun": 613px
+);
+
+@each $name, $marg in $days {
+  .#{$name} div:first-child {
+    margin-left: $marg;
+  }
+}
+
+@keyframes move {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-20px);
+  }
+}
+
+.calendar div:hover {
+  background-color: pink;
+  animation: move 0.5s forwards;
 }
