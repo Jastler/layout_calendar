@@ -1,8 +1,11 @@
+$day-margin: 1px;
+$day-size: 100px;
+
 @mixin size {
-  display: relative;
-  margin: 0 1px 1px;
-  width: 100px;
-  height: 100px;
+  margin: 0 $day-margin $day-margin 0;
+  width: $day-size;
+  height: $day-size;
+
   background-color: #eee;
   border: 1px solid;
   box-sizing: border-box;
@@ -10,20 +13,25 @@
   &::after {
     display: inline-block;
   }
+
+  &:hover {
+    animation: move 0.5s forwards;
+  }
 }
 
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
   margin: 0;
 }
 
 .calendar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-wrap: wrap;
-  width: 730px;
+  width: (($day-size + $day-margin)*7);
 }
 
 @for $i from 1 through 31 {
@@ -45,18 +53,18 @@ body {
   
 }
 
-$days : (
-  "calendar-mon": 0,
-  "calendar-tue": 103px,
-  "calendar-wed": 205px,
-  "calendar-thu": 307px,
-  "calendar-fri": 409px,
-  "calendar-sat": 511px,
-  "calendar-sun": 613px
+$days: (
+  "mon": 0,
+  "tue": ($day-margin + $day-size),
+  "wed": ($day-margin + $day-size) * 2,
+  "thu": ($day-margin + $day-size) * 3,
+  "fri": ($day-margin + $day-size) * 4,
+  "sat": ($day-margin + $day-size) * 5,
+  "sun": ($day-margin + $day-size) * 6
 );
 
 @each $name, $marg in $days {
-  .#{$name} div:first-child {
+  .calendar-#{$name} div:first-child {
     margin-left: $marg;
   }
 }
@@ -67,10 +75,6 @@ $days : (
   }
   to {
     transform: translateY(-20px);
+    background-color: pink;
   }
-}
-
-.calendar div:hover {
-  background-color: pink;
-  animation: move 0.5s forwards;
 }
