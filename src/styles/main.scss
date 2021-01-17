@@ -1,6 +1,10 @@
 $day-margin: 1px;
 $day-size: 100px;
 
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 @mixin size {
   margin: 0 $day-margin $day-margin 0;
   width: $day-size;
@@ -37,12 +41,12 @@ body {
 @for $i from 1 through 31 {
   .calendar div:nth-child(#{$i})::after {
     content: "#{$i}";
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
     display: none;
-    width: 100%;
-    line-height: 100px;
     text-align: center;
+
+    width: 100%;
+    font-size: 30px;
+    line-height: 100px;
   }
 }
 
